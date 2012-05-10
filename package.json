@@ -4,6 +4,9 @@
   "author":      "hubot",
   "keywords":    "github hubot campfire bot",
   "description": "A simple helpful Robot for your Company",
+  "engines": {
+    "node": "0.6.x"
+  }
   "licenses":     [{
     "type":       "MIT",
     "url":        "http://github.com/github/hubot/raw/master/LICENSE"
