@@ -3,15 +3,16 @@
 # meme me <image query>,<top line>,<bottom line> - Make a quality meme
 
 module.exports = (robot) ->
-  robot.respond /(meme)( me)? ([\w\s\?\!]*),([\w\s\?\!]*)(,([\w\s\?\!]*))?/i, (msg) ->
+  robot.respond /(meme)( me)? ([^,]*),([^,]*)(,([^,]*))?/i, (msg) ->
     for match in msg.match
       console.log match
     imageMe msg, msg.match[3], (url) ->
       if msg.match[5]
         lastMatch = msg.match[5].replace /,/g, ""
-        memeUrl = "http://memecaptain.com/g?u="+escape(url)+"&t1="+escape(msg.match[4])+"&t2="+escape(lastMatch)
+        memeUrl = "http://memecaptain.com/g?u="+encodeURIComponent(url)+"&t1="+encodeURIComponent(msg.match[4])+"&t2="+encodeURIComponent(lastMatch)
       else
-        memeUrl = "http://memecaptain.com/g?u="+escape(url)+"&t1="+escape(msg.match[4])
+        memeUrl = "http://memecaptain.com/g?u="+encodeURIComponent(url)+"&t1="+encodeURIComponent(msg.match[4])
+      console.log("Sending request to memcaptain: "+memeUrl)
       msg.http(memeUrl)
         .get() (err, res, body) ->
           result = JSON.parse(body)
