@@ -5,6 +5,8 @@
 module.exports = (robot) ->
 
   robot.respond /(bigboard|board)( me)?/i, (msg) ->
-  	msg.http('http://www.docracy.com/application/activestats')
+  	bigBoardURL = process.env.BIGBOARD_URL
+  	console.log("BIGBOARD_URL: " + bigBoardURL)
+  	msg.http(bigBoardURL)
 	  	.get() (err, res, body) ->
 	    	msg.send body
