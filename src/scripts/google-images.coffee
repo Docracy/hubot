@@ -27,6 +27,16 @@ module.exports = (robot) ->
       imageMe msg, imagery, (url) ->
         msg.send "#{mustachify}#{url}"
 
+  robot.respond /bane me (.*)/i, (msg) ->
+    mustachify = "http://baneify.herokuapp.com/?src="
+    imagery = msg.match[1]
+
+    if imagery.match /^https?:\/\//i
+      msg.send "#{mustachify}#{imagery}"
+    else
+      imageMe msg, imagery, (url) ->
+        msg.send "#{mustachify}#{url}"
+
 imageMe = (msg, query, cb) ->
   msg.http('http://ajax.googleapis.com/ajax/services/search/images')
     .query(v: "1.0", rsz: '8', q: query, safe: 'active')
