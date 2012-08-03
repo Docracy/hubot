@@ -4,7 +4,7 @@
 
 module.exports = (robot) ->
 
-  robot.respond /(bigboard|board)( me)?/i, (msg) ->
+  robot.respond /(bigboard|board|baneboard)( me)?/i, (msg) ->
   	bigBoardURL = process.env.BIGBOARD_URL
   	console.log("BIGBOARD_URL: " + bigBoardURL)
   	msg.http(bigBoardURL)
