@@ -15,9 +15,10 @@ reactionMe = (msg, query, cb) ->
   msg.http('http://www.reactiongifs.com/')
     .query(tag: properquery)
     .get() (err, res, body) ->
-      gifs = body.match(/http[^"]*\.gif/g)
+      gifs = body.match(/(http:[^"]*?\.gif)/g)
       if gifs
         gifs = gifs.filter((gif) -> return gif.indexOf("loading.gif") == -1)
+        gifs = gifs.filter((gif) -> return gif.indexOf("thumbs") == -1)
         if (gifs.length > 0)
           cb gifs[Math.floor(Math.random() * gifs.length)]
       else
