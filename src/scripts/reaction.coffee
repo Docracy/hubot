@@ -11,11 +11,12 @@ reactionMe = (msg, query, cb) ->
   properquery = query.replace /\s/g, "-"
   #properquery = properquery.replace /[\W^-]/g, ""
 
-  console.log("Querying: "+properquery)
-  msg.http('http://www.reactiongifs.com/')
-    .query(tag: properquery)
+  url = 'http://www.reactiongifs.com/tag/'+properquery+"/"
+  console.log("Querying: "+url)
+  msg.http(url)
     .get() (err, res, body) ->
       gifs = body.match(/(http:[^"]*?\.gif)/g)
+      console.log("  Results: "+body.length)
       if gifs
         gifs = gifs.filter((gif) -> return gif.indexOf("loading.gif") == -1)
         gifs = gifs.filter((gif) -> return gif.indexOf("thumbs") == -1)
