@@ -20,6 +20,6 @@ landMe = (msg, cb) ->
        response = JSON.parse body
        tweet = msg.random response
        if tweet
-        cb "Howdy neighbor, @land_grant says: '"+tweet.text+"' (http://twitter.com/#!/#{tweet.user.screen_name}/status/#{tweet.id_str})"
+        cb "http://twitter.com/#{tweet.user.screen_name}/status/#{tweet.id_str}"
        else
         cb "Error"
