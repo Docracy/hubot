@@ -9,16 +9,20 @@ module.exports = (robot) ->
     imageMe msg, msg.match[3], (url) ->
       if msg.match[5]
         lastMatch = msg.match[5].replace /,/g, ""
-        memeUrl = "http://memecaptain.com/g?u="+encodeURIComponent(url)+"&t1="+encodeURIComponent(msg.match[4])+"&t2="+encodeURIComponent(lastMatch)
+        memeUrl = "http://v1.memecaptain.com/g?u="+encodeURIComponent(url)+"&t1="+encodeURIComponent(msg.match[4])+"&t2="+encodeURIComponent(lastMatch)
       else
-        memeUrl = "http://memecaptain.com/g?u="+encodeURIComponent(url)+"&t1="+encodeURIComponent(msg.match[4])
+        memeUrl = "http://v1.memecaptain.com/g?u="+encodeURIComponent(url)+"&t1="+encodeURIComponent(msg.match[4])
       console.log("Sending request to memcaptain: "+memeUrl)
       msg.http(memeUrl)
         .get() (err, res, body) ->
+          console.log('Meme captain result: '+body)
           result = JSON.parse(body)
           msg.send result.imageUrl
 
 imageMe = (msg, query, cb) ->
+  if query.indexOf('http') == 0
+    cb query
+    return
   msg.http('http://ajax.googleapis.com/ajax/services/search/images')
     .query(v: "1.0", rsz: '8', q: query, safe: 'active')
     .get() (err, res, body) ->
